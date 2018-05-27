@@ -10,14 +10,12 @@ import { update } from '../../redux/user.redux'
     state => state.user,
     { update }
 )
-class BossInfo extends React.Component {
+class GeniusInfo extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             title: "",
-            company: "",
-            money: '',
             desc: '',
             avatar:''
         }
@@ -39,7 +37,7 @@ class BossInfo extends React.Component {
                 {/* {this.props.redirectTo ? <Redirect to={this.props.redirectTo}></Redirect> : null} */}
                 {redirect && redirect !== path ? <Redirect to={this.props.redirectTo}></Redirect> : null}
 
-                <NavBar mode="dark">Boss Infomation</NavBar>
+                <NavBar mode="dark">Genius Infomation</NavBar>
                 <AvatarSelector
                     selectAvatar={(v) => {
                         this.setState({
@@ -48,17 +46,15 @@ class BossInfo extends React.Component {
                     }}
                 ></AvatarSelector>
                 <InputItem onChange={v => { this.onChange('title', v) }}>
-                    Hire Position
+                    Position
                 </InputItem>
-                <InputItem onChange={v => { this.onChange('company', v) }}>
-                    Company
-                </InputItem>
-                <InputItem onChange={v => { this.onChange('money', v) }}>
+               
+                {/* <InputItem onChange={v => { this.onChange('money', v) }}>
                     Salary
-                </InputItem>
+                </InputItem> */}
                 <TextareaItem
                     rows={3}
-                    title="Job Description"
+                    title="Description"
                     autoHeight
                     onChange={v => { this.onChange('desc', v) }}>
                 </TextareaItem>
@@ -76,4 +72,4 @@ class BossInfo extends React.Component {
     }
 }
 
-export default BossInfo;
+export default GeniusInfo;

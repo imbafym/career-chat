@@ -13,6 +13,8 @@ import Login from './container/login/login'
 import Register from './container/register/register'
 import AuthRoute from './component/authRoute/authRoute'
 import BossInfo from './container/bossinfo/bossinfo'
+import GeniusInfo from './container/geniusInfo/geniusInfo'
+import Dashboard from './component/dashboard/dashboard'
 const store = createStore(reducers, compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f))
@@ -22,16 +24,20 @@ function Boss() {
 }
 
 
+// Boss Genius Me Msg 4个页面共享
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
                 <AuthRoute></AuthRoute>
-
+                
                 <Switch>
                     <Route path='/login' component={Login}></Route>
                     <Route path='/register' component={Register}></Route>
                     <Route path='/bossinfo' component={BossInfo}></Route>
+                    <Route path='/geniusinfo' component={GeniusInfo}></Route>
+                    {/* <Route path='/boss' component={Boss}></Route> */}
+                    <Route component={Dashboard}></Route>
                 </Switch>
             </div>
 

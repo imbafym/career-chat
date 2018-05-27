@@ -4,10 +4,10 @@ import { getRedirectPath } from '../util/util'
 // const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 // const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 // AUTH SUCEESS 代表login update 和 reigster
-const AUTH_SUCCESS = 'LOGIN_SUCCESS'
+const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERROR_MESSAGE = 'ERROR_MESSAGE'
 const LOAD_DATA = 'LOAD_DATA'
-const SAVE_INFO = 'SAVE_INFO'
+
 const initState = {
     redirectTo: '',
     // isAuth:false
@@ -22,7 +22,8 @@ const initState = {
 export function user(state = initState, action) {
     switch (action.type) {
         case AUTH_SUCCESS:
-            return { ...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload }
+            return { ...state, msg: '', redirectTo: getRedirectPath(action.payload), 
+            ...action.payload }
         case ERROR_MESSAGE:
             return { ...state, msg: action.msg, isAuth: false }
         case LOAD_DATA:
@@ -35,7 +36,9 @@ export function user(state = initState, action) {
 }
 
 //actions
-function authSuccess(data) {
+function authSuccess(obj) {
+    //过滤pwd
+    const {pwd, ...data} = obj
     return {  type: AUTH_SUCCESS, payload: data }
 }
 function errorMsg(msg) {
@@ -52,30 +55,7 @@ export function loadData(userInfo) {
     return { type: LOAD_DATA, payload: userInfo }
 }
 
-//not actions
-export function userinfo() {
 
-    return dispatch => {
-        //get User Data
-        axios.get('/user/info').then(
-            res => {
-                if (res.status === 200) {
-
-                    if (res.data.code === 0) {
-                        //有登录信息
-                        console.log(res.data)
-                    } else {
-                        this.props.history.push('/login')
-                    }
-
-                }
-            }
-        )
-        //if loged?
-        // 判断 current url 是否要跳转login 
-    }
-
-}
 
 export function login({ user, pwd }) {
 
@@ -121,12 +101,12 @@ export function register({ user, pwd, type, repeatpwd }) {
 }
 
 export function update(data) {
-    const {title,company,money,avatar} = data
-   
+   console.log(JSON.stringify(data) + ' this data is from update method in redux')
     return dispatch => {
         axios.post('/user/update', data ).
             then(res => {
                 if (res.status == 200 && res.data.code === 0) {
+                    console.log(res.data.data)
                     dispatch(authSuccess(res.data.data))
                 } else {
                     dispatch(errorMsg(res.data.msg))

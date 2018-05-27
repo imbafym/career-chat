@@ -5,7 +5,7 @@ import { loadData } from '../../redux/user.redux'
 import { connect } from 'react-redux'
 //AuthRoute 不是router 对象 用这个注释来使用history
 @withRouter
-@connect(state => state.user, { loadData })
+@connect(state => null, { loadData })
 class AuthRoute extends React.Component {
     componentDidMount() {
         //如果在login和register页面 则不需要跳转
@@ -24,7 +24,7 @@ class AuthRoute extends React.Component {
                         this.props.loadData(res.data.data)
                         // console.log(res.data)
                     } else {
-                        
+
                         this.props.history.push('/login')
                     }
 
