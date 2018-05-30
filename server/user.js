@@ -4,14 +4,53 @@ const utils = require('utility')
 const Router = express.Router()
 const model = require('./moudle')
 const User = model.getModel('user')
+const Chat = model.getModel('chat')
 
 const _filter = { 'pwd': 0, '__v': 0 }
 
 Router.get('/list', function (req, res) {
-    User.find({}, function (err, doc) {
-        return res.json(doc)
+    // User.remove({},function(e,d){})
+    const { type } = req.query
+    User.find({ type }, function (err, doc) {
+        return res.json({ code: 0, data: doc })
     })
 })
+
+Router.get('/getMsgList', function (req, res) {
+    const user = req.cookies.userid
+    // Chat.remove({},function(e,d){})
+    let users = {}
+    User.find({}, function (err, doc) {
+
+        doc.forEach(v => {
+            users[v._id] = { name: v.user, avatar: v.avatar }
+        })
+    })
+    Chat.find({ '$or': [{ from: user }, { to: user }] }, function (err, doc) {
+        if (!err) {
+            // console.log(doc + ' get msg llist')
+            return res.json({ code: 0, msgs: doc, users: users })
+        }
+    })
+})
+Router.post('/readmsg', function (req, res) {
+    const user = req.cookies.userid
+
+    const { from } = req.body
+    console.log(user, from)
+    Chat.update(
+        { from, to: user },
+        { '$set': { read: true } },
+        { 'multi': true },
+            function(err, doc){
+            if(!err) {
+                console.log(doc)
+                return res.json({ code: 0, num: doc.nModified })
+            }
+        return res.json({ code: 1, msg: 'reda msg failed' })
+        })
+})
+
 Router.post('/login', function (req, res) {
 
     const { user, pwd } = req.body
@@ -39,10 +78,10 @@ Router.post('/update', function (req, res) {
         // console.log(doc + ' this is doc')
         // console.log(JSON.stringify (body) + ' this is body')
         // console.log(JSON.stringify (data) + ' this is data')
-        
+
         return res.json({ code: 0, data })
     })
-    
+
 
 })
 

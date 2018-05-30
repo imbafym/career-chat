@@ -1,8 +1,8 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-}
+} */
 
 
 
@@ -17,6 +17,7 @@ body {
 	bottom: 0;
 	width: 100%;
 	height:auto;
+	z-index: -1;
 }
 .fixd-header.am-navbar{
 	position: fixed;
@@ -25,4 +26,25 @@ body {
 }
 .page-content{
 	padding:45px 5px;
+}
+
+
+#chat-page .chat-me .am-list-extra{
+	flex-basis:auto;
+}
+#chat-page .chat-me .am-list-content{
+	padding-right: 15px;
+	text-align: right;
+}
+#chat-page .am-grid-icon{
+	display: none;
+}
+#chat-page .am-grid-text{
+	margin-top: 0;
+}
+.stick-footer{
+	z-index:10;
+	position: absolute;
+	bottom: 0;
+	width:100%;
 }
