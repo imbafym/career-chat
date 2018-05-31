@@ -174,6 +174,13 @@ app.use('/', express.static(path.resolve('build')))
 //2. DNS 解析服务器IP
 //3. 安装nginx
 // 4. 使用pm2管理Node进程
-server.listen(9093, function () {
-    console.log('Node app runs on 9093')
+// server.listen(9093, function () {
+//     console.log('Node app runs on 9093')
+// })
+
+
+//Heroku 
+var port = process.env.PORT || config.port
+server.listen(port, function(){
+     console.log(`${pkg.name} listening on port ${port}`)
 })
