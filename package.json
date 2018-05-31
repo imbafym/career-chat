@@ -71,7 +71,7 @@
     "server-backup": "nodemon server/server.js",
     "server-linux": "NODE_ENV=test nodemon --exec babel-node server/server.js",
     "server": "set NODE_ENV=test&&nodemon --exec babel-node -- ./server/server.js",
-    "heroku": "NODE_ENV=production node index"
+    "heroku": "NODE_ENV=production --exec babel-node ./server/server.js"
   },
   "jest": {
     "collectCoverageFrom": [
