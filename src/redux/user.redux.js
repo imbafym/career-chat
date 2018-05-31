@@ -35,8 +35,6 @@ export function user(state = initState, action) {
         default:
             return state;
     }
-
-    return state
 }
 
 //actions
@@ -97,8 +95,8 @@ export function register({ user, pwd, type, repeatpwd }) {
     }
 
     return dispatch => {
-        axios.post('/user/register', { user, pwd, type }).
-            then(res => {
+        axios.post('/user/register', { user, pwd, type })
+        .then(res => {
                 if (res.status == 200 && res.data.code === 0) {
                     dispatch(authSuccess({ user, pwd, type }))
                 } else {
@@ -112,8 +110,8 @@ export function register({ user, pwd, type, repeatpwd }) {
 export function update(data) {
     console.log(JSON.stringify(data) + ' this data is from update method in redux')
     return dispatch => {
-        axios.post('/user/update', data).
-            then(res => {
+        axios.post('/user/update', data)
+            .then(res => {
                 if (res.status == 200 && res.data.code === 0) {
                     console.log(res.data.data)
                     dispatch(authSuccess(res.data.data))

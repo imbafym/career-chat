@@ -37,14 +37,14 @@ Router.post('/readmsg', function (req, res) {
     const user = req.cookies.userid
 
     const { from } = req.body
-    console.log(user, from)
+    // console.log(user, from)
     Chat.update(
         { from, to: user },
         { '$set': { read: true } },
         { 'multi': true },
             function(err, doc){
             if(!err) {
-                console.log(doc)
+                // console.log(doc)
                 return res.json({ code: 0, num: doc.nModified })
             }
         return res.json({ code: 1, msg: 'reda msg failed' })
@@ -86,7 +86,7 @@ Router.post('/update', function (req, res) {
 })
 
 Router.post('/register', function (req, res) {
-    console.log(req.body)
+    // console.log(req.body)
     const { user, pwd, type } = req.body
     User.findOne({ user: user }, function (err, doc) {
         if (doc) {

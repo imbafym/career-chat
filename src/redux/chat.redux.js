@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
 const socket = io('ws://localhost:9093')
@@ -100,6 +100,7 @@ export function getMsgList() {
                     const userid = getState().user._id
                     dispatch(msglist(res.data.msgs, res.data.users, userid))
                 }
+                return res.data.code
             })
     }
 }

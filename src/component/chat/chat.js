@@ -1,13 +1,13 @@
 import React from 'react'
 import { InputItem, List, NavBar, Icon, Grid } from 'antd-mobile'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { connect } from 'react-redux'
 import { getMsgList, sendMsg, recvMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util/util';
-
+import QueueAnim from 'rc-queue-anim'
 
 //跨域了 所以要穿东西
-const socket = io('ws://localhost:9093')
+// const socket = io('ws://localhost:9093')
 @connect(
     state => state,
     { getMsgList, sendMsg, recvMsg, readMsg })
@@ -18,8 +18,8 @@ class Chat extends React.Component {
             this.props.recvMsg()
         }
         this.fixCarousel()
-      
-        
+
+
         // socket.on('recvmsg', (data) => {
         //     console.log(data)
         //     this.setState({
@@ -29,13 +29,13 @@ class Chat extends React.Component {
 
     }
     //组件退出时 发送请求将更改redux已读消息
-    componentWillUnmount(){
+    componentWillUnmount() {
         const to = this.props.match.params.user
         this.props.readMsg(to)
     }
 
 
-    fixCarousel(){
+    fixCarousel() {
 
         setTimeout(() => {
             window.dispatchEvent(new Event('resize')), 0
@@ -57,7 +57,7 @@ class Chat extends React.Component {
         const to = this.props.match.params.user
         const msg = this.state.text
         this.props.sendMsg({ from, to, msg })
-        this.setState({ text: '' , showEmoji: false})
+        this.setState({ text: '', showEmoji: false })
     }
     render() {
         console.log(this.props)
@@ -91,27 +91,28 @@ class Chat extends React.Component {
                     onLeftClick={() => this.props.history.goBack()}>
                     {users[userid].name}
                 </NavBar>
+             
+				<QueueAnim delay={10}>
+					{chatmsgs.map(v=>{
+						const avatar = require(`../img/${users[v.from].avatar}.png`)
+						return v.from==userid?(
+							<List key={v._id}>
+								<Item
+									thumb={avatar}
+								>{v.content}</Item>
+							</List>
+						
+						):(
+							<List key={v._id}>
+								<Item
+									extra={<img alt='头像' src={avatar} />}
+								 	className='chat-me'
+								 	>{v.content}</Item>
+							</List>
 
-                {chatmsgs.map(v => {
-                    // console.log('this is from',v.from)
-                    // console.log('this is me',user)
-                    const avatar = require(`../img/${users[v.from].avatar}.png`)
-                    return v.from === userid ?
-                        (
-                            <List key={v.id}>
-                                <Item thumb={avatar}>
-                                    {v.content}
-                                </Item>
-
-                            </List>
-                        ) :
-                        <List key={v.id}
-                            className='chat-me'>
-                            <Item extra={<img src={avatar}></img>}>
-                                {v.content}
-                            </Item></List>
-                })}
-
+						)
+					})}
+				</QueueAnim>
                 <div className='stick-footer'>
                     <List>
 
@@ -127,8 +128,7 @@ class Chat extends React.Component {
                                 <div>
                                     <span
                                         style={{
-                                            "marginRight": 15,
-                                            "z-index": -1
+                                            "marginRight": 15
                                         }}
                                         onClick={() => {
                                             this.setState({ showEmoji: !this.state.showEmoji })
@@ -148,12 +148,12 @@ class Chat extends React.Component {
                             columnNum={9}
                             carouselMaxRow={4}
                             isCarousel={true}
-                            onClick={el=>{
+                            onClick={el => {
                                 this.setState({
-                                    text:this.state.text+el.text
+                                    text: this.state.text + el.text
                                 })
                             }}
-                        
+
                         />
                         : null}
                 </div>

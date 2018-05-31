@@ -19,7 +19,7 @@ assetHook({
 //後端裏面的前端渲染引入
 //React => div
 import React from 'react'
-import { renderToNodeStream } from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
@@ -80,14 +80,26 @@ app.use(function (req, res, next) {
         reducers,
         compose(applyMiddleware(thunk))
     )
+       //SSR
+    let context = {}
+    const markup = renderToString((<Provider store={store}>
+        <StaticRouter
+            location={req.url}
+            context={context}>
+            <App />
+
+        </StaticRouter>
+    </Provider>))
+
+
     //simple seo
     const obj = {
-        '/msg': 'this is msg page',
+        '/msg' : 'this is msg page',
         '/boss': 'this is boss page',
-        '/login': 'this is login page',
+        '/login':'this is login page',
     }
-
-    res.write(`<!DOCTYPE html>
+       //SSR
+    const pageHtml = `<!DOCTYPE html>
     <html lang="en">
     
     <head>
@@ -106,61 +118,17 @@ app.use(function (req, res, next) {
       <noscript>
         You need to enable JavaScript to run this app.
       </noscript>
-      <div id="root">`)
-    //SSR
-    let context = {}
-    const markupStream = renderToNodeStream((<Provider store={store}>
-        <StaticRouter
-            location={req.url}
-            context={context}>
-            <App />
-
-        </StaticRouter>
-    </Provider>))
-
-     markupStream.pipe(res,{end:false}) 
-     markupStream.on('end',()=>{
-         res.write(
-             `</div>
+      <div id="root">${markup}</div>
     
-             <script src=${staticPath['main.js']} ></script>
-           </body>
-           
-           </html>`
-         )
-         res.end()
-     })
-    //SSR
-    // const pageHtml = `<!DOCTYPE html>
-    // <html lang="en">
+      <script src=${staticPath['main.js']} ></script>
+    </body>
     
-    // <head>
-    //   <meta charset="utf-8">
-    //   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    //   <meta name="theme-color" content="#000000">
-    //   <meta name='keyword' content='React,Redux,Chat, SSR'>
-    //   <meta name='auther' content='Yiming Fan'>
-    //   <meta name='description' content='${obj[req.url]}'>
-      
-    //   <title>Career Chat</title>
-    //   <link rel="stylesheet" href="/${staticPath['main.css']}">
-    // </head>
-    
-    // <body>
-    //   <noscript>
-    //     You need to enable JavaScript to run this app.
-    //   </noscript>
-    //   <div id="root">${markup}</div>
-    
-    //   <script src=${staticPath['main.js']} ></script>
-    // </body>
-    
-    // </html>`
+    </html>`
 
+    
 
-
-    //SSR
-    // res.send(pageHtml)
+   //SSR
+    res.send(pageHtml)
     // return res.sendFile(path.resolve('build/index.html'))
 }
 

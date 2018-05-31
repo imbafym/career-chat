@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../../component/logo/logo'
-import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import { List, InputItem, Radio, WhiteSpace, Button } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/user.redux'
@@ -14,12 +14,12 @@ class Register extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            user: '',
-            pwd: '',
-            repeatpwd: '',
-            // type: 'genius'// or boss
-        }
+        // this.state = {
+        //     user: '',
+        //     pwd: '',
+        //     repeatpwd: '',
+        //     // type: 'genius'// or boss
+        // }
         this.handleRegister = this.handleRegister.bind(this)
     }
     componentDidMount(){
