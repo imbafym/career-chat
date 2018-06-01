@@ -11,7 +11,7 @@ const MSG_RECV = 'MSG_RECV'
 //表示已读
 const MSG_READ = 'MSG_READ'
 
-
+const URL = 'https://evening-savannah-21157.herokuapp.com/'
 const initState = {
     chatmsg: [],
     unread: 0,
@@ -78,7 +78,7 @@ export function sendMsg({ from, to, msg }) {
 export function readMsg(from) {
     return (dispatch, getState) => {
         const userid = getState().user._id
-        axios.post('/user/readmsg', { from })
+        axios.post(`${URL}/user/readmsg`, { from })
             .then(res => {
                 if (res.status === 200 && res.data.code === 0) {
                     dispatch(msgRead({from, userid, num:res.data.num}))
@@ -92,7 +92,7 @@ export function readMsg(from) {
 export function getMsgList() {
     // getState 获取redux内所有信息
     return (dispatch, getState) => {
-        axios.get('/user/getmsglist')
+        axios.get(`${URL}/user/getmsglist`)
             .then(res => {
                 if (res.status = 200 && res.data.code === 0) {
                     // console.log('getmsglist method',res.data)

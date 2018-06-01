@@ -17,6 +17,7 @@ const initState = {
     type: ''
 }
 
+const URL = 'https://evening-savannah-21157.herokuapp.com/'
 
 //reducer
 export function user(state = initState, action) {
@@ -71,7 +72,7 @@ export function login({ user, pwd }) {
     }
 
     return dispatch => {
-        axios.post('/user/login', { user, pwd })
+        axios.post(`${URL}/user/login`, { user, pwd })
             .then(
                 res => {
                     if (res.status === 200 && res.data.code === 0) {
@@ -95,7 +96,7 @@ export function register({ user, pwd, type, repeatpwd }) {
     }
 
     return dispatch => {
-        axios.post('/user/register', { user, pwd, type })
+        axios.post(`${URL}/user/register`, { user, pwd, type })
         .then(res => {
                 if (res.status == 200 && res.data.code === 0) {
                     dispatch(authSuccess({ user, pwd, type }))
@@ -110,7 +111,7 @@ export function register({ user, pwd, type, repeatpwd }) {
 export function update(data) {
     console.log(JSON.stringify(data) + ' this data is from update method in redux')
     return dispatch => {
-        axios.post('/user/update', data)
+        axios.post(`${URL}/user/update`, data)
             .then(res => {
                 if (res.status == 200 && res.data.code === 0) {
                     console.log(res.data.data)

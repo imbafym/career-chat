@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const USER_LIST = "USER_LIST"
-
+const URL = 'https://evening-savannah-21157.herokuapp.com/'
 
 const initState = {
     userlist: []
@@ -28,7 +28,7 @@ function userList(data) {
 
 export function getUserList(type) {
     return dispatch => {
-        axios.get('/user/list?type=' + type).then(res => {
+        axios.get(`${URL}/user/list?type=` + type).then(res => {
             if (res.data.code === 0) {
                 console.log(res)
                 dispatch(userList(res.data.data))
