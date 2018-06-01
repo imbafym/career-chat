@@ -114,7 +114,6 @@ app.use(function (req, res, next) {
             location={req.url}
             context={context}>
             <App />
-
         </StaticRouter>
     </Provider>))
 
