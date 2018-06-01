@@ -6,35 +6,49 @@
 // import model from './moudle'
 // import staticPath from '../build/asset-manifest.json'
 
-var _express = require('express');
-var _utility = require('utility');
-var _bodyParser = require('body-parser');
-var _cookieParser = require('cookie-parser');
-var _path = require('path');
-var _moudle = require('./moudle');
-var _assetManifest = require('../build/asset-manifest.json');
+var express = require('express');
+var utility = require('utility');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var path = require('path');
+var model = require('./moudle');
+var assetManifest = require('../build/asset-manifest.json');
 
 
 
-console.log(staticPath)
+// console.log(staticPath)
 //后端css hock
-import csshook from 'css-modules-require-hook/preset'
-import assetHook from 'asset-require-hook'
-assetHook({
-    extensions: ['png'],
-    limit: 8000
-})
+// import csshook from 'css-modules-require-hook/preset'
+// import assetHook from 'asset-require-hook'
+// var preset = require('css-modules-require-hook/preset');
+// var assetRequireHook = require('asset-require-hook');
+// assetHook({
+//     extensions: ['png'],
+//     limit: 8000
+// })
 
 //後端裏面的前端渲染引入
 //React => div
-import React from 'react'
-import { renderToNodeStream } from 'react-dom/server'
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
-import { Provider } from 'react-redux'
-import { StaticRouter } from 'react-router-dom'
-import App from '../src/App'
-import reducers from '../src/reducer'
+// var react = require('react');
+// var { renderToNodeStream } = require('react-dom/server');
+// var { createStore, applyMiddleware, compose } = require('redux');
+
+// var thunk = require('redux-thunk');
+// var { Provider } = require('react-redux');
+
+// var { StaticRouter } = require('react-router-dom');
+// var App = require('../src/App');
+// var reducers = require('../src/reducer');
+
+///////////////////////////
+// import React from 'react'
+// import { renderToNodeStream } from 'react-dom/server'
+// import { createStore, applyMiddleware, compose } from 'redux'
+// import thunk from 'redux-thunk'
+// import { Provider } from 'react-redux'
+// import { StaticRouter } from 'react-router-dom'
+// import App from '../src/App'
+// import reducers from '../src/reducer'
 
 // function App() {
 //     return (<div>
@@ -85,62 +99,18 @@ app.use(function (req, res, next) {
 
 
     //SSR
-    const store = createStore(
-        reducers,
-        compose(applyMiddleware(thunk))
-    )
+    // const store = createStore(
+    //     reducers,
+    //     compose(applyMiddleware(thunk))
+    // )
     //simple seo
-    const obj = {
-        '/msg': 'this is msg page',
-        '/boss': 'this is boss page',
-        '/login': 'this is login page',
-    }
+    // const obj = {
+    //     '/msg': 'this is msg page',
+    //     '/boss': 'this is boss page',
+    //     '/login': 'this is login page',
+    // }
 
-    res.write(`<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="theme-color" content="#000000">
-      <meta name='keyword' content='React,Redux,Chat, SSR'>
-      <meta name='auther' content='Yiming Fan'>
-      <meta name='description' content='${obj[req.url]}'>
-      
-      <title>Career Chat</title>
-      <link rel="stylesheet" href="/${staticPath['main.css']}">
-    </head>
-    
-    <body>
-      <noscript>
-        You need to enable JavaScript to run this app.
-      </noscript>
-      <div id="root">`)
-    //SSR
-    let context = {}
-    const markupStream = renderToNodeStream((<Provider store={store}>
-        <StaticRouter
-            location={req.url}
-            context={context}>
-            <App />
-
-        </StaticRouter>
-    </Provider>))
-
-     markupStream.pipe(res,{end:false}) 
-     markupStream.on('end',()=>{
-         res.write(
-             `</div>
-    
-             <script src=${staticPath['main.js']} ></script>
-           </body>
-           
-           </html>`
-         )
-         res.end()
-     })
-    //SSR
-    // const pageHtml = `<!DOCTYPE html>
+    // res.write(`<!DOCTYPE html>
     // <html lang="en">
     
     // <head>
@@ -159,18 +129,62 @@ app.use(function (req, res, next) {
     //   <noscript>
     //     You need to enable JavaScript to run this app.
     //   </noscript>
-    //   <div id="root">${markup}</div>
+    //   <div id="root">`)
+    //SSR
+    // let context = {}
+    // const markupStream = renderToNodeStream((<Provider store={store}>
+    //     <StaticRouter
+    //         location={req.url}
+    //         context={context}>
+    //         <App />
+
+    //     </StaticRouter>
+    // </Provider>))
+
+    // markupStream.pipe(res, { end: false })
+    // markupStream.on('end', () => {
+    //     res.write(
+    //         `</div>
     
+    //          <script src=${staticPath['main.js']} ></script>
+    //        </body>
+           
+    //        </html>`
+    //     )
+    //     res.end()
+    // })
+    //SSR
+    // const pageHtml = `<!DOCTYPE html>
+    // <html lang="en">
+
+    // <head>
+    //   <meta charset="utf-8">
+    //   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    //   <meta name="theme-color" content="#000000">
+    //   <meta name='keyword' content='React,Redux,Chat, SSR'>
+    //   <meta name='auther' content='Yiming Fan'>
+    //   <meta name='description' content='${obj[req.url]}'>
+
+    //   <title>Career Chat</title>
+    //   <link rel="stylesheet" href="/${staticPath['main.css']}">
+    // </head>
+
+    // <body>
+    //   <noscript>
+    //     You need to enable JavaScript to run this app.
+    //   </noscript>
+    //   <div id="root">${markup}</div>
+
     //   <script src=${staticPath['main.js']} ></script>
     // </body>
-    
+
     // </html>`
 
 
 
     //SSR
     // res.send(pageHtml)
-    // return res.sendFile(path.resolve('build/index.html'))
+    return res.sendFile(path.resolve('build/index.html'))
 }
 
 )
@@ -190,6 +204,6 @@ app.use('/', express.static(path.resolve('build')))
 
 //Heroku 
 const port = process.env.PORT || config.port
-server.listen(port, function(){
-     console.log(`${pkg.name} listening on port ${port}`)
+server.listen(port, function () {
+    console.log(`Server listening on port ${port}`)
 })
