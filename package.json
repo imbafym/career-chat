@@ -72,7 +72,7 @@
     "server-linux": "NODE_ENV=test nodemon --exec babel-node server/server.js",
     "server": "set NODE_ENV=test&&nodemon --exec babel-node -- ./server/server.js",
     "start-server": "node ./server/server.js",
-    "heroku": "NODE_ENV=production --exec babel-node ./server/server.js"
+    "heroku": "NODE_ENV=production&&nodemon --exec babel-node server/server.js"
   },
   "jest": {
     "collectCoverageFrom": [
