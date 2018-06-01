@@ -12,8 +12,10 @@ import './index.css'
 import App from './App';
 
 const store = createStore(reducers, compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f))
+    applyMiddleware(thunk)
+    // ,
+    // window.devToolsExtension ? window.devToolsExtension() : f => f)
+))
 
 // function Boss() {
 //     return <h2>boss</h2>
