@@ -1,10 +1,19 @@
-import express from 'express'
-import utils from 'utility'
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
-import path from 'path'
-import model from './moudle'
-import staticPath from '../build/asset-manifest.json'
+// import express from 'express'
+// import utils from 'utility'
+// import bodyParser from 'body-parser'
+// import cookieParser from 'cookie-parser'
+// import path from 'path'
+// import model from './moudle'
+// import staticPath from '../build/asset-manifest.json'
+
+var _express = require('express');
+var _utility = require('utility');
+var _bodyParser = require('body-parser');
+var _cookieParser = require('cookie-parser');
+var _path = require('path');
+var _moudle = require('./moudle');
+var _assetManifest = require('../build/asset-manifest.json');
+
 
 
 console.log(staticPath)
@@ -180,7 +189,7 @@ app.use('/', express.static(path.resolve('build')))
 
 
 //Heroku 
-var port = process.env.PORT || config.port
+const port = process.env.PORT || config.port
 server.listen(port, function(){
      console.log(`${pkg.name} listening on port ${port}`)
 })
