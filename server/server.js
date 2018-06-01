@@ -203,7 +203,7 @@ app.use('/', express.static(path.resolve('build')))
 
 
 //Heroku 
-const port = process.env.PORT || config.port
+const port = process.env.PORT || 3000
 server.listen(port, function () {
     console.log(`Server listening on port ${port}`)
 })
