@@ -68,8 +68,6 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "server-backup": "nodemon server/server.js",
-    "server-linux": "NODE_ENV=test nodemon --exec babel-node server/server.js",
     "server": "set NODE_ENV=test&&nodemon --exec babel-node -- ./server/server.js"
   },
   "jest": {

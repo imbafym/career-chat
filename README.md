@@ -1,19 +1,55 @@
-### 用来node server post user 数据
-### 还有个cookie parser
-### npm install body-parser --save
-### 清楚cookie npm install browser-cookies --save
-### 後端衹有三個返回屬性， code 狀態嗎 data 數據 msg 報錯或成功信息
+# JOB-HUNTING-WEBAPP
 
-### 后端密码加密 cmd5
-### utility 
-### npm install utility --save
-### 继续加盐 重复嵌套MD5
+## ABOUT
 
-###  HOC 属性代理， 反向继承 可以用@
+  This job hunting webapp，backend using express, socketIO and mongodb; frontend using react+redux, UI using Antd-Mobile.
+
+  Main function：regist->login- add information -> Seeker/Boss List-> Message List -> Chat Page -> Personal info
+  Main User : 1. Job Seeker
+              2. Boss
+
+  ### Frontend
+
+      creact-react-app
+      react16
+      redux
+      react-redux
+      redux-thunk
+      react-router4
+      prop-types
+      axios
+      browser-cookies
+      antd-mobile
+
+  ### Backend  
+      
+      node
+      socketIo
+      express
+      mongoose
+      utility
+      cookie-parser
+      body-parser
 
 
-### socket io 
-### 基于websocket协议
-### 双向通信，后端主动推送数据
-### npm install socket.io --save
-### npm install socket.io-client --save
+
+## Install & Run
+
+  ### Dependencies
+
+      Install NodeJs&MongoDB
+      Mongodb port is 27017
+      express server port is 9093(proxy)
+      app port is 9093
+
+
+  ### How to run
+      
+      1.cd to folder location
+      2.npm install 
+      3.(windows) open mongod.exe in your MongoDb server folder
+        (linux/mac) Mongo
+      4.npm run build
+      5.npm run server
+
+
