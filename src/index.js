@@ -15,9 +15,7 @@ const store = createStore(reducers, compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f))
 
-// function Boss() {
-//     return <h2>boss</h2>
-// }
+
 
 
 // Boss Genius Me Msg 4个页面共享
@@ -25,8 +23,6 @@ ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>
          <App />
-
         </BrowserRouter>
     </Provider>
-
     , document.getElementById('root'));

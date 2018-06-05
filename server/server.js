@@ -27,20 +27,10 @@ import { StaticRouter } from 'react-router-dom'
 import App from '../src/App'
 import reducers from '../src/reducer'
 
-// function App() {
-//     return (<div>
 
-//         <p>Windwos</p>
-//         <p>Render</p>
-
-//     </div>)
-// }
-// console.log(renderToString(App()))
 const Chat = model.getModel('chat')
-// console.log(Chat)
 
 const app = express()
-
 //work with express
 const server = require('http').Server(app)
 
@@ -64,103 +54,16 @@ io.on('connection', function (socket) {
 
 const userRouter = require('./user')
 
-
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use('/user', userRouter)
+
 //拦截 user 开头或者static 路径下 执行下一步操作 一般是接受发送获取消息的路径
 //否则执行index.html文件 交给前端渲染
 app.use(function (req, res, next) {
     if (req.url.startsWith('/user/') || req.url.startsWith('/static/'))
         return next()
-
-
-    //SSR
-    const store = createStore(
-        reducers,
-        compose(applyMiddleware(thunk))
-    )
-    //simple seo
-    const obj = {
-        '/msg': 'this is msg page',
-        '/boss': 'this is boss page',
-        '/login': 'this is login page',
-    }
-
-    res.write(`<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="theme-color" content="#000000">
-      <meta name='keyword' content='React,Redux,Chat, SSR'>
-      <meta name='auther' content='Yiming Fan'>
-      <meta name='description' content='${obj[req.url]}'>
-      
-      <title>Career Chat</title>
-      <link rel="stylesheet" href="/${staticPath['main.css']}">
-    </head>
-    
-    <body>
-      <noscript>
-        You need to enable JavaScript to run this app.
-      </noscript>
-      <div id="root">`)
-    //SSR
-    let context = {}
-    const markupStream = renderToNodeStream((<Provider store={store}>
-        <StaticRouter
-            location={req.url}
-            context={context}>
-            <App />
-        </StaticRouter>
-    </Provider>))
-
-     markupStream.pipe(res,{end:false}) 
-     markupStream.on('end',()=>{
-         res.write(
-             `</div>
-    
-             <script src=${staticPath['main.js']} ></script>
-           </body>
-           
-           </html>`
-         )
-         res.end()
-     })
-    //SSR
-    // const pageHtml = `<!DOCTYPE html>
-    // <html lang="en">
-    
-    // <head>
-    //   <meta charset="utf-8">
-    //   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    //   <meta name="theme-color" content="#000000">
-    //   <meta name='keyword' content='React,Redux,Chat, SSR'>
-    //   <meta name='auther' content='Yiming Fan'>
-    //   <meta name='description' content='${obj[req.url]}'>
-      
-    //   <title>Career Chat</title>
-    //   <link rel="stylesheet" href="/${staticPath['main.css']}">
-    // </head>
-    
-    // <body>
-    //   <noscript>
-    //     You need to enable JavaScript to run this app.
-    //   </noscript>
-    //   <div id="root">${markup}</div>
-    
-    //   <script src=${staticPath['main.js']} ></script>
-    // </body>
-    
-    // </html>`
-
-
-
-    //SSR
-    // res.send(pageHtml)
-    // return res.sendFile(path.resolve('build/index.html'))
+    return res.sendFile(path.resolve('build/index.html'))
 }
 
 )

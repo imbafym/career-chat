@@ -12,53 +12,6 @@ import immocForm from '../../component/immoc-form/immoc-form'
 class Login extends React.Component {
 
 
-// function hello(){
-// 	console.log('hello imooc I love React')
-// }
-
-// function WrapperHello(fn){
-// 	return function(){
-// 		console.log('before say hello')
-// 		fn()
-// 		console.log('after say hello')
-// 	}
-// }
-// hello = WrapperHello(hello)
-// hello()
-
-// 属性代理
-// function WrapperHello(Comp){
-
-// 	class WrapComp extends Comp{
-// 			componentDidMount(){
-// 				console.log('高阶组件新增的生命周期，加载完成')
-// 			}
-// 			render(){
-// 				return <Comp></Comp>
-// 			}
-// 	}
-	// class WrapComp extends React.Component{
-
-	// 	render(){
-	// 		return (<div>
-	// 			<p>这是HOC高阶组件特有的元素</p>
-	// 			<Comp name='text' {...this.props}></Comp>
-	// 		</div>)
-	// 	}
-	// }
-// 	return WrapComp
-// }
-
-
-
-
-// @WrapperHello
-// class Hello extends React.Component{
-// 	render(){
-// 		return <h2>hello imooc I love React&Rdux</h2>
-// 	}
-// }
-
 
     constructor(props) {
         super(props);
