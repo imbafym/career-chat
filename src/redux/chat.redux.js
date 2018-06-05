@@ -1,7 +1,7 @@
 // import React from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
-const socket = io('ws://localhost:9093')
+const git  = io('ws://localhost:9093')
 
 
 //获取聊天列表
